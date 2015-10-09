@@ -33,9 +33,10 @@
 					<span style="white-space: pre" ng-hide="collapsed">{{application.infoDetails}}</span></td>
 				<td><span class="status-{{application.statusInfo.status}}" title="{{application.statusInfo.timestamp  | date:'dd.MM.yyyy HH:mm:ss' }}">{{ application.statusInfo.status }}</span>
 				<span ng-show="application.refreshing" class="refresh"></span></td>
-				<td>
+				<td style="white-space:nowrap;">
 					<div class="pull-right">
-						<div class="btn-group" ng-hide="application.managementUrl == null || application.statusInfo.status == null || application.statusInfo.status == 'OFFLINE'">
+						<div class="btn-group" 
+							ng-hide="isMonitoringDisabled(application) || application.managementUrl == null || application.statusInfo.status == null || application.statusInfo.status == 'OFFLINE'">
 							<a ng-if="application.capabilities.logfile" target="_self" class="btn btn-success" ng-href="{{application.capabilities.logfile ? 'api/applications/' + application.id + '/logfile' :''}}"><i class="icon-file icon-white"></i>Log</a>
 							<a ui-sref="apps.details.metrics({id: application.id})" class="btn btn-success">Details</a>
 							<a class="btn btn-success dropdown-toggle" data-toggle="dropdown">
@@ -49,6 +50,12 @@
 								<li><a ui-sref="apps.trace({id: application.id})" >Trace</a></li>
 								<li ng-show="application.capabilities.activiti"><a ui-sref="apps.activiti({id: application.id})" >Activiti</a></li>
 							</ul>
+						</div>
+						<div ng-hide="isMonitoringDisabled(application)" class="btn-group" title="Turn off monitoring">
+							<a class="btn btn-warning" ng-click="disableMonitoring(application)">Turn Off Monitoring</a>
+						</div>
+						<div ng-hide="!isMonitoringDisabled(application)" class="btn-group" title="Turn on monitoring">
+							<a class="btn btn-warning" ng-click="enableMonitoring(application)">Turn On Monitoring</a>
 						</div>
 						<div class="btn-group" title="remove">
 							<a class="btn btn-danger" ng-click="remove(application)"><i class="icon-remove icon-white"></i></a>

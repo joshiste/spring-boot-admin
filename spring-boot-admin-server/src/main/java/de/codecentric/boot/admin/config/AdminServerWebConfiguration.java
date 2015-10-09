@@ -42,6 +42,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.codecentric.boot.admin.controller.JournalController;
+import de.codecentric.boot.admin.controller.MonitoringController;
 import de.codecentric.boot.admin.controller.RegistryController;
 import de.codecentric.boot.admin.event.ClientApplicationDeregisteredEvent;
 import de.codecentric.boot.admin.event.ClientApplicationRegisteredEvent;
@@ -209,6 +210,12 @@ public class AdminServerWebConfiguration extends WebMvcConfigurerAdapter
 	@ConditionalOnMissingBean
 	public JournalController journalController() {
 		return new JournalController(applicationEventJournal());
+	}
+
+	@Bean
+	@ConditionalOnMissingBean
+	public MonitoringController monitoringController(){
+		return new MonitoringController(applicationRegistry());
 	}
 
 	@Bean

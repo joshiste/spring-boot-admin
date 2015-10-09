@@ -112,5 +112,13 @@ module.exports = function ($resource, $http, $q, ApplicationLogging) {
         return ApplicationLogging.getLoggingConfigurator(this);
     };
 
+    Application.prototype.disableMonitoring = function() {
+        return $http.delete('api/applications/monitor/' + this.id);
+    };
+
+    Application.prototype.enableMonitoring = function() {
+        return $http.post('api/applications/monitor/' + this.id);
+    };
+
     return Application;
 };
