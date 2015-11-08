@@ -31,6 +31,7 @@
         <module>spring-boot-admin-samples</module>
         <module>spring-boot-admin-starter-client</module>
         <module>spring-boot-admin-docs</module>
+        <module>spring-boot-admin-cli</module>
     </modules>
     <organization>
         <name>codecentric AG</name>

@@ -1,0 +1,16 @@
+ - bootadm --url --user --password
+ - bootadm ls --pretty --format
+ - bootadm add name --service-url http://base --health-url /health --mgmt-url /mgmt
+ - bootadm rm <instance>
+ - bootadm env --pretty --format --pattern=regex <instance>
+ - bootadm env --auto-refresh set foo "bar" <instance>
+ - bootadm env --auto-refresh reset <instance>
+ - bootadm refresh <instance>
+ - bootadm metrics --pretty --format --pattern <instance>
+ - bootadm dump --pretty --format <instance>
+ - bootadm info --pretty --format <instance>
+ - bootadm health --pretty --format <instance>
+ - bootadm logfile <instance>
+ - bootadm logger
+ - bootadm logger foo.bar <instance>
+ - bootadm logger set foo.bar INFO <intance>
