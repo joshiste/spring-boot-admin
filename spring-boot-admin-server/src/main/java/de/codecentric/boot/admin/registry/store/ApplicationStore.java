@@ -29,7 +29,7 @@ public interface ApplicationStore {
 	 * Application is replaced.
 	 *
 	 * @param app Application to store
-	 * @return the Application associated previosly with the applications id.
+	 * @return the Application associated previously with the applications id.
 	 */
 	Application save(Application app);
 

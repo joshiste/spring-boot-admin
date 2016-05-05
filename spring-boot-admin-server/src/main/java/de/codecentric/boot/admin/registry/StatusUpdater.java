@@ -15,6 +15,8 @@
  */
 package de.codecentric.boot.admin.registry;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -30,7 +32,7 @@ import de.codecentric.boot.admin.model.StatusInfo;
 import de.codecentric.boot.admin.registry.store.ApplicationStore;
 
 /**
- * The StatusUpdater is responsible for updatig the status of all or a single application querying
+ * The StatusUpdater is responsible for updating the status of all or a single application querying
  * the healthUrl.
  *
  * @author Johannes Edmeier
@@ -43,6 +45,16 @@ public class StatusUpdater implements ApplicationEventPublisherAware {
 	private ApplicationEventPublisher publisher;
 	private long statusLifetime = 10_000L;
 
+	/**
+	 * Specifies for which statuses update will not be triggered.
+	 */
+	@SuppressWarnings("serial")
+	private Collection<String> nonUpdatingStatuses = new HashSet<String>() {
+		{
+			add(StatusInfo.ofMonitoringDisabled().getStatus());
+		}
+	};
+
 	public StatusUpdater(RestTemplate restTemplate, ApplicationStore store) {
 		this.restTemplate = restTemplate;
 		this.store = store;
@@ -52,7 +64,9 @@ public class StatusUpdater implements ApplicationEventPublisherAware {
 		long now = System.currentTimeMillis();
 		for (Application application : store.findAll()) {
 			if (now - statusLifetime > application.getStatusInfo().getTimestamp()) {
-				updateStatus(application);
+				if (!nonUpdatingStatuses.contains(application.getStatusInfo().getStatus())) {
+					updateStatus(application);
+				}
 			}
 		}
 	}

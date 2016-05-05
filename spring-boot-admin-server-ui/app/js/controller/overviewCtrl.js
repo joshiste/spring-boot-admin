@@ -44,4 +44,41 @@ module.exports = function ($rootScope, $scope) {
         }
     };
 
+    /*Disables Monitoring on application*/
+    $scope.disableMonitoring = function(application){
+        application.disableMonitoring()
+            .success(function (response) {
+                $scope.loadData();
+            })
+            .error(function (error) {
+                $scope.error = error;
+            });
+    };
+
+    /*Enables Monitoring on application*/
+    $scope.enableMonitoring = function(application){
+        application.enableMonitoring()
+            .success(function (response) {
+                $scope.loadData();
+            })
+            .error(function (error) {
+                $scope.error = error;
+            });
+    };
+
+    $scope.isMonitoringDisabled = function(application){
+        if(application.statusInfo.status === "MONITORING-DISABLED"){
+            return true;
+        }else{
+            return false;
+        }
+    };
+
+    $scope.isUp = function(application){
+        if(application.statusInfo.status === "UP"){
+            return true;
+        }else{
+            return false;
+        }
+    }
 };

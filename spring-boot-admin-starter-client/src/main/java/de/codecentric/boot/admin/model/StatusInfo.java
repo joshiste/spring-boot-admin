@@ -47,6 +47,10 @@ public class StatusInfo implements Serializable {
 		return valueOf("OFFLINE");
 	}
 
+	public static StatusInfo ofMonitoringDisabled() {
+		return valueOf("MONITORING-DISABLED");
+	}
+
 	public String getStatus() {
 		return status;
 	}
